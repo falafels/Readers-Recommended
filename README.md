@@ -1,2 +1,2 @@
-# Reader-sRecommended
+# Readers-Recommended
 A book recommendation webapp
