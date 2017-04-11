@@ -12,7 +12,7 @@ public class Search {
 		Scanner sc = null;
 		try {
 		    try {
-				inputStream = new FileInputStream("Ratings");
+				inputStream = new FileInputStream("SortedUsers.txt");
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -20,11 +20,10 @@ public class Search {
 		    sc = new Scanner(inputStream, "UTF-8");
 		    while (sc.hasNextLine()) {
 		        String line = sc.nextLine();
-		        String lineWithoutBeg = line.substring(38);
-		        int userID = Integer.parseInt(lineWithoutBeg.substring(0, lineWithoutBeg.indexOf(",")));
+		        int userID = Integer.parseInt(line.substring(1, line.indexOf(";")-1));
 		        if (num==userID){
-		        	String ISBN = lineWithoutBeg.substring(lineWithoutBeg.indexOf("'"), lineWithoutBeg.lastIndexOf("'"));
-		        	ISBNs.add(ISBN.substring(1));
+		        	String ISBN = line.substring( line.indexOf(";")+2, line.lastIndexOf(";")-1);
+		        	ISBNs.add(ISBN);
 		        }
 		    }
 		    // note that Scanner suppresses exceptions
@@ -61,7 +60,7 @@ public class Search {
 		Scanner sc = null;
 		try {
 		    try {
-				inputStream = new FileInputStream("Ratings");
+				inputStream = new FileInputStream("SortedISBN.txt");
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -69,10 +68,9 @@ public class Search {
 		    sc = new Scanner(inputStream, "UTF-8");
 		    while (sc.hasNextLine()) {
 		        String line = sc.nextLine();
-		        String lineWithoutBeg = line.substring(38);
-		        String ISBN = lineWithoutBeg.substring(lineWithoutBeg.indexOf("'"), lineWithoutBeg.lastIndexOf("'"));
-		        if (str.equals(ISBN.substring(1))){
-		        	int userID = Integer.parseInt(lineWithoutBeg.substring(0, lineWithoutBeg.indexOf(",")));
+		        String ISBN = line.substring(1, line.indexOf(";")-1);
+		        if (str.equals(ISBN)){
+		        	int userID = Integer.parseInt(line.substring( line.indexOf(";")+2, line.lastIndexOf(";")-1));
 		        	userIDs.add(userID);
 		        }
 		    }
@@ -108,7 +106,7 @@ public class Search {
 		Scanner sc = null;
 		try {
 		    try {
-				inputStream = new FileInputStream("Titles");
+				inputStream = new FileInputStream("SortedTitlesByISBN");
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -116,10 +114,9 @@ public class Search {
 		    sc = new Scanner(inputStream, "UTF-8");
 		    while (sc.hasNextLine()) {
 		        String line = sc.nextLine();
-		        String lineWithoutBeg = line.substring(32);
-		        String ISBN = lineWithoutBeg.substring(0, lineWithoutBeg.indexOf("'",+10));
+		        String ISBN = line.substring(1, line.indexOf(";")-1);
 		        if (str.equals(ISBN)){
-		        	String title = lineWithoutBeg.substring(lineWithoutBeg.indexOf("'",+10), lineWithoutBeg.lastIndexOf("'"));
+		        	String title = line.substring(line.indexOf(";",+2), line.lastIndexOf("\""));
 		        	return title.substring(3);
 		        }
 		    }
@@ -157,7 +154,7 @@ public class Search {
 		Scanner sc = null;
 		try {
 		    try {
-				inputStream = new FileInputStream("Titles");
+				inputStream = new FileInputStream("SortedTitles.txt");
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -165,10 +162,9 @@ public class Search {
 		    sc = new Scanner(inputStream, "UTF-8");
 		    while (sc.hasNextLine()) {
 		        String line = sc.nextLine();
-		        String lineWithoutBeg = line.substring(32);
-		        String title = lineWithoutBeg.substring(lineWithoutBeg.indexOf("'",+10), lineWithoutBeg.lastIndexOf("'"));
+		        String title = line.substring(1, line.indexOf(";")-1);
 		        if (title.contains(str)){
-		        	String ISBN = lineWithoutBeg.substring(0, lineWithoutBeg.indexOf("'",+10));
+		        	String ISBN = line.substring(line.indexOf(";")+1,line.lastIndexOf("\""));
 		        	return ISBN.substring(1);
 		        }
 		    }
