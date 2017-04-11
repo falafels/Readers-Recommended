@@ -106,7 +106,7 @@ public class Search {
 		Scanner sc = null;
 		try {
 		    try {
-				inputStream = new FileInputStream("SortedTitlesByISBN");
+				inputStream = new FileInputStream("SortedTitlesByISBN.txt");
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
