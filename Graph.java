@@ -2,17 +2,18 @@ import java.util.ArrayList;
 
 
 public class Graph {
-	private Bag<BookT>[]	adj;
-	private int V,E;
+	static ArrayList<ArrayList<BookT>>	adj;
+	private int V;
+	private static int E;
 	private ArrayList<String> Books;
-	private BookT[] in;
+	
 	
 	public Graph(int V){
 		this.V =	V;	this.E =	0;
-		adj =	(Bag<BookT>[])	new Bag[V];	//	Create	array	of	BookT
+		adj =	new ArrayList<ArrayList<BookT>>(0);	//	Create	array	of	BookT
 		
-		for (int v	=	0;	v	<	V;	v++)	//	Initialize all	lists
-			adj[v]	=	new Bag<BookT>();	//	to	empty.
+		for (int v	=	0;	v	<	V;	v++)	//	Initialize all	lists to empty lists
+			adj.add(new ArrayList<BookT>(0));
 		}
 	
 	public Graph(BookT[] in){
@@ -45,19 +46,20 @@ public class Graph {
 		return V;
 	}
 	
-	public int E(){
+	public static int E(){
 		return E;
 	}
 	
 	public void addEdge(BookT v,	BookT w, int i, int c){
-		adj[i].add(w);	//	Add	w	to	v�s	list.
-		adj[c].add(v);	//	Add	v	to	w�s	list.
+		adj.get(i).add(w);	//	Add	w	to	v�s	list.
+		adj.get(c).add(v);	//	Add	v	to	w�s	list.
 		E++;
 	}	
 	
-	public Iterable<BookT>	adj(int v)
-	{	return adj[v];	}
+	public static Iterable<BookT>	adj(int v)
+	{	return adj.get(v);	}
 	
+	@SuppressWarnings("unused")
 	public static int degree(Graph	G,	int v){
 		int degree	=	0;
 		for (BookT w :	G.adj(v))	degree++;
