@@ -58,23 +58,4 @@ public class Graph {
 	
 	public static Iterable<BookT>	adj(int v)
 	{	return adj.get(v);	}
-	
-	@SuppressWarnings("unused")
-	public static int degree(Graph	G,	int v){
-		int degree	=	0;
-		for (BookT w :	G.adj(v))	degree++;
-		return degree;
-	}
-	
-	public static int maxDegree(Graph	G){
-		int max	=	0;
-		for (int v	=	0;	v	<	G.V();	v++)
-		if (degree(G,	v)	>	max)
-		max	=	degree(G,	v);
-		return max;
-	}
-	
-	public static int avgDegree(Graph	G)
-	{	return 2	*	G.E()	/	G.V();	}
-	
 }
