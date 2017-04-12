@@ -1,9 +1,11 @@
 import java.io.*;
 import java.util.*;
 
+//Search.java will search through the sorted files and return desired information
 public class Search {
 
-	
+	//takes an int (userID) as input.  Searches through ratings file (sorted by userID) and returns a list of 
+	//ratings (representing the ratings that the user gave the books reviewed).
 	public static ArrayList<String> searchUserIdForISBN(int num){
 		
 		ArrayList<String> ISBNs = new ArrayList<String>();
@@ -26,7 +28,7 @@ public class Search {
 		        	ISBNs.add(ISBN);
 		        }
 		    }
-		    // note that Scanner suppresses exceptions
+		    
 		    if (sc.ioException() != null) {
 		        try {
 					throw sc.ioException();
@@ -51,8 +53,62 @@ public class Search {
 		return ISBNs;
 		
 		
-	}
+	}//end method searchUserIDForISBN
 	
+	//takes an int (userID) as input.  Searches through ratings file (sorted by userID) and returns 
+	//a list of ratings (representing the ratings that the user gave the books reviewed)
+	public static ArrayList<Integer> searchUserIdForRatings(int num){
+		
+		ArrayList<Integer> Ratings = new ArrayList<Integer>();
+		
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		try {
+		    try {
+				inputStream = new FileInputStream("SortedUsers.txt");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		    sc = new Scanner(inputStream, "UTF-8");
+		    while (sc.hasNextLine()) {
+		        String line = sc.nextLine();
+		        int userID = Integer.parseInt(line.substring(1, line.indexOf(";")-1));
+		        if (num==userID){
+		        	
+		        	int rating = Integer.parseInt(line.substring(line.lastIndexOf(";")+2, line.lastIndexOf("\"")));
+		        	Ratings.add(rating);
+		        }
+		    }
+		    
+		    if (sc.ioException() != null) {
+		        try {
+					throw sc.ioException();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		} finally {
+		    if (inputStream != null) {
+		        try {
+					inputStream.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		    if (sc != null) {
+		        sc.close();
+		    }
+		}
+		return Ratings;
+		
+		
+	}//end method searchUserIDForRatings
+	
+	//takes a string (an ISBN) as input.  Searches through ratings file (sorted by ISBN) and returns 
+	//a list of userIDs (as strings), representing all the users that reviewed the given book.
 	public static ArrayList<Integer> searchISBNForUserID(String str){
 		
 		ArrayList<Integer> userIDs = new ArrayList<Integer>();
@@ -74,7 +130,7 @@ public class Search {
 		        	userIDs.add(userID);
 		        }
 		    }
-		    // note that Scanner suppresses exceptions
+		    
 		    if (sc.ioException() != null) {
 		        try {
 					throw sc.ioException();
@@ -100,6 +156,8 @@ public class Search {
 		
 	}
 	
+	//takes a string (an ISBN) as input.  Searches through the titles file (sorted by ISBN) 
+	//and returns the corresponding book title as a string.
 	public static String searchISBNForTitle(String str){
 		
 		FileInputStream inputStream = null;
@@ -120,7 +178,7 @@ public class Search {
 		        	return title.substring(3);
 		        }
 		    }
-		    // note that Scanner suppresses exceptions
+		    
 		    if (sc.ioException() != null) {
 		        try {
 					throw sc.ioException();
@@ -145,9 +203,11 @@ public class Search {
 		
 		return null;
 		
-	}
+	}//end method searchISBNForTitle
 		
-	
+
+	//takes a string (book title) as input.  Searches through the titles file (sorted by title) 
+	//and returns the corresponding ISBN as a string.
 	public static String searchTitleForISBN(String str){
 		
 		FileInputStream inputStream = null;
@@ -168,7 +228,7 @@ public class Search {
 		        	return ISBN.substring(1);
 		        }
 		    }
-		    // note that Scanner suppresses exceptions
+		    
 		    if (sc.ioException() != null) {
 		        try {
 					throw sc.ioException();
@@ -193,59 +253,9 @@ public class Search {
 		
 		return null;
 		
-	}
-	
-	public static ArrayList<Integer> searchUserIdForRatings(int num){
-		
-		ArrayList<Integer> Ratings = new ArrayList<Integer>();
-		
-		FileInputStream inputStream = null;
-		Scanner sc = null;
-		try {
-		    try {
-				inputStream = new FileInputStream("SortedUsers.txt");
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		    sc = new Scanner(inputStream, "UTF-8");
-		    while (sc.hasNextLine()) {
-		        String line = sc.nextLine();
-		        int userID = Integer.parseInt(line.substring(1, line.indexOf(";")-1));
-		        if (num==userID){
-		        	
-		        	int rating = Integer.parseInt(line.substring(line.lastIndexOf(";")+2, line.lastIndexOf("\"")));
-		        	Ratings.add(rating);
-		        }
-		    }
-		    // note that Scanner suppresses exceptions
-		    if (sc.ioException() != null) {
-		        try {
-					throw sc.ioException();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		} finally {
-		    if (inputStream != null) {
-		        try {
-					inputStream.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		    }
-		    if (sc != null) {
-		        sc.close();
-		    }
-		}
-		return Ratings;
-		
-		
-	}
+	}//end method searchTitleForISBN
 	
 	
-}
+}//end class
 	
 
