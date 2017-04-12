@@ -195,6 +195,56 @@ public class Search {
 		
 	}
 	
+	public static ArrayList<Integer> searchUserIdForRatings(int num){
+		
+		ArrayList<Integer> Ratings = new ArrayList<Integer>();
+		
+		FileInputStream inputStream = null;
+		Scanner sc = null;
+		try {
+		    try {
+				inputStream = new FileInputStream("SortedUsers.txt");
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		    sc = new Scanner(inputStream, "UTF-8");
+		    while (sc.hasNextLine()) {
+		        String line = sc.nextLine();
+		        int userID = Integer.parseInt(line.substring(1, line.indexOf(";")-1));
+		        if (num==userID){
+		        	
+		        	int rating = Integer.parseInt(line.substring(line.lastIndexOf(";")+2, line.lastIndexOf("\"")));
+		        	Ratings.add(rating);
+		        }
+		    }
+		    // note that Scanner suppresses exceptions
+		    if (sc.ioException() != null) {
+		        try {
+					throw sc.ioException();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		} finally {
+		    if (inputStream != null) {
+		        try {
+					inputStream.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		    if (sc != null) {
+		        sc.close();
+		    }
+		}
+		return Ratings;
+		
+		
+	}
+	
 	
 }
 	
