@@ -12,6 +12,7 @@ import java.util.Comparator;
 public class ISBNSortTest {
 	public static void main(String[] args){
 		String filename = "BX-Book-Ratings.csv";
+		//Create an ArrayList of strings for ISBN
 		ArrayList<String> ISBN = new ArrayList<String>();
 				File file = new File(filename); //TODO: read about file
 				try {
@@ -19,10 +20,13 @@ public class ISBNSortTest {
 					String line;
 					try {
 						while((line = br.readLine()) != null){
+							//Take all three columns from the dataset
 							String[] values = line.split(";");
 							ISBN.add(values[1] + ";" + values[0] + ";" + values[2]);
 						}
+						//Call ISBNSort to sort the dataset
 						ISBNSort(ISBN);
+						//Loop through ArrayList to see if values are sorted properly
 						for (String i: ISBN)
 							System.out.println(i);
 					} catch (IOException e) {
@@ -34,13 +38,15 @@ public class ISBNSortTest {
 					e.printStackTrace();
 				}
 	}
-	
+	//Takes the ArrayList generated in the main method as input
+	//Sorts userIDs and ratings according to the ISBN's string values
 	public static void ISBNSort(ArrayList<String>list) throws FileNotFoundException{
 		Collections.sort(list, new Comparator<String>(){
 			public int compare(String s1, String s2){
 				return s1.compareToIgnoreCase(s2);
 			}
 		});
+		//Output sorted ArrayList to a text file
 		@SuppressWarnings("resource")
 		PrintStream out = new PrintStream(new FileOutputStream("SortedISBN.txt"));
 			for(int i = 0; i < list.size(); i++){
